@@ -7,12 +7,17 @@ app = Flask(__name__)
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/mul')
-def multiply():
-    result = 1
+@app.route('/div')
+def divide():
+    flag = False;
+    result = 0
     for arg in request.args:
         try:
-            result = result * eval(request.args.get(arg, default="0"))
+            if not flag:
+                result = eval(request.args.get(arg, default="0"))
+                flag = True
+                continue
+            result = result / eval(request.args.get(arg, default="0"))
         except:
             pass
     return '%f \n' % result
